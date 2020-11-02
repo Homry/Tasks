@@ -16,6 +16,11 @@ void drawTriangle(){
     glVertex3f(1.0, -1.0,1.0);
     glVertex3f(0.0, 1.0, 0.0);
     glEnd();
+    /*glVertex3f(body.widthBlock, -1*body.depthBlock, -1*body.heightBlock);
+    glVertex3f(-body.widthBlock, -1*body.depthBlock, body.heightBlock);
+    glVertex3f(-body.widthBlock*0, -body.depthBlock, body.heightBlock*0);
+    glEnd();*/
+
 
     glBegin(GL_TRIANGLES);
     glColor3f(1.0,0.84,0.0);  // Сделали боковую сторону желтой
@@ -55,18 +60,20 @@ void Idle() {
     if (OldTime == -1)
         StartTime = OldTime = clock();
     else {
-        Time = clock()*1.05;
+        Time = clock();
         DeltaTime = (double)(Time - OldTime) / CLOCKS_PER_SEC;
         OldTime = clock();
     }
     glutPostRedisplay();
+    body.solveRungeKutta(DeltaTime);
 };
 
 void screen(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    body.solveRungeKutta(DeltaTime);
+
     glPushMatrix();
-    glTranslated(body.x.x, body.x.y, body.x.z);
+    glTranslated(0.5, 0.5, sqrt(2)/8);
+    //glTranslated(body.x.x, body.x.y, body.x.z);
     glRotatef(2*acos(body.q.r)*180/M_PI,  body.q.i, body.q.j, body.q.k);
     glPolygonMode(GL_FRONT, GL_FILL);
     drawTriangle();

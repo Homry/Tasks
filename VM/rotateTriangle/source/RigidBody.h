@@ -27,20 +27,20 @@ public:
     double widthBlock;
     double depthBlock;
     RigidBody (){
-        this->mass=2;
+        this->mass = 2;
         this->heightBlock = 1;
-        this->widthBlock = 2;
-        this->depthBlock = 4;
+        this->widthBlock = 1;
+        this->depthBlock = 1;
         matrix Ib_inv;
-        Ib_inv.position[0][0] = 12/((this->heightBlock*this->heightBlock + this->widthBlock*this->widthBlock)*this->mass);
+        Ib_inv.position[0][0] = 20/((this->heightBlock*this->heightBlock + this->depthBlock*this->depthBlock)*this->mass);
         Ib_inv.position[0][1] = 0;
         Ib_inv.position[0][2] = 0;
         Ib_inv.position[1][0] = 0;
-        Ib_inv.position[1][1] = 12/((this->heightBlock*this->heightBlock + this->depthBlock*this->depthBlock)*this->mass);
+        Ib_inv.position[1][1] = 20/((this->heightBlock*this->heightBlock + this->depthBlock*this->depthBlock)*this->mass);
         Ib_inv.position[1][2] = 0;
         Ib_inv.position[2][0] = 0;
         Ib_inv.position[2][1] = 0;
-        Ib_inv.position[2][2] = 12/((this->widthBlock*this->widthBlock + this->depthBlock*this->depthBlock)*this->mass);
+        Ib_inv.position[2][2] = 20/((this->heightBlock*this->heightBlock + this->depthBlock*this->depthBlock)*this->mass);
         this->Ibodyinv = Ib_inv;
         this->x.x = 1;
         this->x.y = 1;
@@ -52,15 +52,15 @@ public:
         this->P.x = 0;
         this->P.y = 0;
         this->P.z = 0;
-        this->L.x = 10;
-        this->L.y = 4;
-        this->L.z = 2;
+        this->L.x = 75;
+        this->L.y = 50;
+        this->L.z = 25;
         this->force.x=0;
         this->force.y=0;
         this->force.z=0;
         this->torque.x=0;
         this->torque.y=0;
-        this->torque.z=0;
+        this->torque.z= 0;
     };
 
     void State_to_Array(double *y){

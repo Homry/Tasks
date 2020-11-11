@@ -5,50 +5,47 @@
 #include <GL/glut.h>
 #include <math.h>
 #include <ctime>
+#include <iostream>
 
-[[maybe_unused]] RigidBody body;
+[[maybe_unused]] RigidBody* body = new RigidBody();
 double DeltaTime;
 
 void drawTriangle(){
+
     glBegin(GL_TRIANGLES);
     glColor3f(0.52,0.44,1.0);// Сделали боковую сторону фиолетовой
-    glVertex3f( 1.0, -1.0,-1.0);
-    glVertex3f(1.0, -1.0,1.0);
-    glVertex3f(0.0, 1.0, 0.0);
+    glVertex3f( body->lengthBlock, -body->widthBlock,-body->heightBlock);
+    glVertex3f(body->lengthBlock, -body->widthBlock,body->heightBlock);
+    glVertex3f(0.0, body->widthBlock, 0.0);
     glEnd();
-    /*glVertex3f(body.widthBlock, -1*body.depthBlock, -1*body.heightBlock);
-    glVertex3f(-body.widthBlock, -1*body.depthBlock, body.heightBlock);
-    glVertex3f(-body.widthBlock*0, -body.depthBlock, body.heightBlock*0);
-    glEnd();*/
-
 
     glBegin(GL_TRIANGLES);
     glColor3f(1.0,0.84,0.0);  // Сделали боковую сторону желтой
-    glVertex3f( 1.0,-1.0, 1.0);
-    glVertex3f(-1.0,-1.0, 1.0);
-    glVertex3f(0.0,1.0,0.0);
+    glVertex3f( body->lengthBlock, -body->widthBlock,body->heightBlock);
+    glVertex3f( -body->lengthBlock, -body->widthBlock,body->heightBlock);
+    glVertex3f(0.0, body->widthBlock, 0.0);
     glEnd();
 
     glBegin(GL_TRIANGLES);
     glColor3f(0.94,0.5,0.5);// Сделали сторону  розовой
-    glVertex3f(-1.0,-1.0,1.0);
-    glVertex3f(-1.0, -1.0,-1.0);
-    glVertex3f(0.0,1.0,0.0);
+    glVertex3f( -body->lengthBlock, -body->widthBlock,body->heightBlock);
+    glVertex3f( -body->lengthBlock, -body->widthBlock,-body->heightBlock);
+    glVertex3f(0.0, body->widthBlock, 0.0);
     glEnd();
 
     glBegin(GL_TRIANGLES);
     glColor3f(0.0,1.0,0.0);  // Сделали сторону  светло зеленой
-    glVertex3f(-1.0,-1.0,-1.0);
-    glVertex3f(1.0,-1.0,-1.0);
-    glVertex3f(0.0, 1.0,0.0);
+    glVertex3f( -body->lengthBlock, -body->widthBlock,-body->heightBlock);
+    glVertex3f( body->lengthBlock, -body->widthBlock,-body->heightBlock);
+    glVertex3f(0.0, body->widthBlock, 0.0);
     glEnd();
 
     glBegin(GL_QUADS);// основание пирамиды
     glColor3f(1.0,0.51,0.28); // сделали основание рыжим
-    glVertex3f( 1.0,-1.0, 1.0);
-    glVertex3f(-1.0,-1.0, 1.0);
-    glVertex3f(-1.0,-1.0,-1.0);
-    glVertex3f( 1.0,-1.0,-1.0);
+    glVertex3f(body->lengthBlock, -body->widthBlock,body->heightBlock);
+    glVertex3f( -body->lengthBlock, -body->widthBlock,body->heightBlock);
+    glVertex3f( -body->lengthBlock, -body->widthBlock,-body->heightBlock);
+    glVertex3f( body->lengthBlock, -body->widthBlock,-body->heightBlock);
     glEnd();
 };
 
@@ -65,16 +62,16 @@ void Idle() {
         OldTime = clock();
     }
     glutPostRedisplay();
-    body.solveRungeKutta(DeltaTime);
+    body->solveRungeKutta(DeltaTime);
 };
 
 void screen(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
     glPushMatrix();
-    glTranslated(0.5, 0.5, sqrt(2)/8);
-    //glTranslated(body.x.x, body.x.y, body.x.z);
-    glRotatef(2*acos(body.q.r)*180/M_PI,  body.q.i, body.q.j, body.q.k);
+    glRotatef(2*acos(body->q.r)*180/M_PI,  body->q.i, body->q.j, body->q.k);
+    /*glTranslated(body->x.x, body->x.y, body->x.z);*/
+    glTranslated(0, 0, sqrt(pow(body->heightBlock, 2) - pow(sqrt(pow(body->widthBlock, 2) + pow(body->lengthBlock, 2)) / 2, 2))); // вращение относительно цетра тяжести пирамиды
+
     glPolygonMode(GL_FRONT, GL_FILL);
     drawTriangle();
     glPopMatrix();

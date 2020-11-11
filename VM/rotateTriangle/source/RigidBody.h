@@ -25,22 +25,23 @@ public:
     vector3D torque;
     double heightBlock;
     double widthBlock;
-    double depthBlock;
+    double lengthBlock;
     RigidBody (){
-        this->mass = 2;
+        std::cout << "init";
+        this->mass=2;
         this->heightBlock = 1;
         this->widthBlock = 1;
-        this->depthBlock = 1;
+        this->lengthBlock = 1;
         matrix Ib_inv;
-        Ib_inv.position[0][0] = 20/((this->heightBlock*this->heightBlock + this->depthBlock*this->depthBlock)*this->mass);
+        Ib_inv.position[0][0] = 20/((this->lengthBlock*this->lengthBlock + this->widthBlock*this->widthBlock)*this->mass);
         Ib_inv.position[0][1] = 0;
         Ib_inv.position[0][2] = 0;
         Ib_inv.position[1][0] = 0;
-        Ib_inv.position[1][1] = 20/((this->heightBlock*this->heightBlock + this->depthBlock*this->depthBlock)*this->mass);
+        Ib_inv.position[1][1] = 20/(this->mass*(3/4*this->heightBlock*this->heightBlock+ this->widthBlock*this->widthBlock));
         Ib_inv.position[1][2] = 0;
         Ib_inv.position[2][0] = 0;
         Ib_inv.position[2][1] = 0;
-        Ib_inv.position[2][2] = 20/((this->heightBlock*this->heightBlock + this->depthBlock*this->depthBlock)*this->mass);
+        Ib_inv.position[2][2] = 20/(this->mass*(3/4*this->heightBlock*this->heightBlock+ this->widthBlock*this->widthBlock));
         this->Ibodyinv = Ib_inv;
         this->x.x = 1;
         this->x.y = 1;
@@ -60,7 +61,7 @@ public:
         this->force.z=0;
         this->torque.x=0;
         this->torque.y=0;
-        this->torque.z= 0;
+        this->torque.z=0;
     };
 
     void State_to_Array(double *y){
@@ -138,19 +139,7 @@ public:
             y[i]*=numb;
         }
     };
-
-    void SUM_Y_DOUBLE(double *y, double numb){
-        for(int i = 0; i<STATE_SIZE; i++){
-            y[i]+=numb;
-        }
-    };
-
-    static void SUM_Y_Y(double *y1, double *y2){
-        for(int i = 0; i<STATE_SIZE; i++){
-            y1[i]+=y2[i];
-        }
-    };
-
+    
     void solveRungeKutta(double h){
         double yinit[STATE_SIZE];
         State_to_Array(yinit);
@@ -160,24 +149,24 @@ public:
         double temp[STATE_SIZE];
         for(int i = 0; i<STATE_SIZE; i++){
             temp[i] = k_1[i];
+            temp[i] *= (1.0/2.0);
+            temp[i] += yinit[i];
         }
-        MUL_Y_DOUBLE(temp, 1.0/2.0);
-        SUM_Y_Y(temp, yinit);
         double k_2[STATE_SIZE];
         dydt(temp,k_2);
         MUL_Y_DOUBLE(k_2, h);
         for(int i = 0; i<STATE_SIZE; i++){
             temp[i] = k_2[i];
+            temp[i] *= (1.0/2.0);
+            temp[i] += yinit[i];
         }
-        MUL_Y_DOUBLE(temp, 1.0/2.0);
-        SUM_Y_Y(temp, yinit);
         double k_3[STATE_SIZE];
         dydt(temp,k_3);
         MUL_Y_DOUBLE(k_3, h);
         for(int i = 0; i<STATE_SIZE; i++){
             temp[i] = k_3[i];
+            temp[i] += yinit[i];
         }
-        SUM_Y_Y(temp, yinit);
         double k_4[STATE_SIZE];
         dydt(temp,k_4);
         MUL_Y_DOUBLE(k_4, h);
@@ -188,11 +177,11 @@ public:
         double res[STATE_SIZE];
         for(int i = 0; i<STATE_SIZE; i++){
             res[i] = yinit[i];
+            res[i] += k_1[i];
+            res[i] += k_2[i];
+            res[i] += k_3[i];
+            res[i] += k_4[i];
         }
-        SUM_Y_Y(res, k_1);
-        SUM_Y_Y(res, k_2);
-        SUM_Y_Y(res, k_3);
-        SUM_Y_Y(res, k_4);
         Array_to_State(res);
     };
 
@@ -201,7 +190,10 @@ public:
         Compute_Force_and_Torque();
         ddt_State_to_Array(ydot);
     };
+
 };
+
+
 
 
 #endif //ROTATETRIANGLE_RIGIDBODY_H

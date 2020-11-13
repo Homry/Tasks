@@ -47,6 +47,7 @@ void drawTriangle(){
     glVertex3f(-(body->length/2), -(body->width/2), 0.0);
     glVertex3f(-(body->length/2), (body->width/2), 0.0);
     glEnd();
+}
 
 void Idle() {
     long Time;

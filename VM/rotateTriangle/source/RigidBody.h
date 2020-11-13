@@ -23,25 +23,25 @@ public:
     vector3D omega;
     vector3D force;
     vector3D torque;
-    double heightBlock;
-    double widthBlock;
-    double lengthBlock;
+    double height;
+    double width;
+    double length;
     RigidBody (){
-        std::cout << "init";
         this->mass=2;
-        this->heightBlock = 1;
-        this->widthBlock = 1;
-        this->lengthBlock = 1;
+        this->width = 1.5;
+        this->length = 1.5;
+        //this->height = sqrt(pow(this->edge, 2) - pow(sqrt(pow(this->width, 2) + pow(this->length, 2)) / 2, 2));
+        this->height = 1.5;
         matrix Ib_inv;
-        Ib_inv.position[0][0] = 20/((this->lengthBlock*this->lengthBlock + this->widthBlock*this->widthBlock)*this->mass);
+        Ib_inv.position[0][0] = 20/((this->length * this->length + this->width * this->width) * this->mass);
         Ib_inv.position[0][1] = 0;
         Ib_inv.position[0][2] = 0;
         Ib_inv.position[1][0] = 0;
-        Ib_inv.position[1][1] = 20/(this->mass*(3/4*this->heightBlock*this->heightBlock+ this->widthBlock*this->widthBlock));
+        Ib_inv.position[1][1] = 20/(this->mass*((3 / 4) * this->height * this->height + this->width * this->width));
         Ib_inv.position[1][2] = 0;
         Ib_inv.position[2][0] = 0;
         Ib_inv.position[2][1] = 0;
-        Ib_inv.position[2][2] = 20/(this->mass*(3/4*this->heightBlock*this->heightBlock+ this->widthBlock*this->widthBlock));
+        Ib_inv.position[2][2] = 20/(this->mass*((3 / 4) * this->height * this->height + this->length * this->length));
         this->Ibodyinv = Ib_inv;
         this->x.x = 1;
         this->x.y = 1;
@@ -53,9 +53,9 @@ public:
         this->P.x = 0;
         this->P.y = 0;
         this->P.z = 0;
-        this->L.x = 75;
-        this->L.y = 50;
-        this->L.z = 25;
+        this->L.x = 150;
+        this->L.y = 100;
+        this->L.z = 50;
         this->force.x=0;
         this->force.y=0;
         this->force.z=0;
@@ -170,17 +170,10 @@ public:
         double k_4[STATE_SIZE];
         dydt(temp,k_4);
         MUL_Y_DOUBLE(k_4, h);
-        MUL_Y_DOUBLE(k_1, 1.0/6.0);
-        MUL_Y_DOUBLE(k_2, 1.0/3.0);
-        MUL_Y_DOUBLE(k_3, 1.0/3.0);
-        MUL_Y_DOUBLE(k_4, 1.0/6.0);
         double res[STATE_SIZE];
         for(int i = 0; i<STATE_SIZE; i++){
-            res[i] = yinit[i];
-            res[i] += k_1[i];
-            res[i] += k_2[i];
-            res[i] += k_3[i];
-            res[i] += k_4[i];
+            res[i] = yinit[i] + (k_1[i] * (1.0/6.0)) + (k_2[i] * (1.0/3.0))+ (k_3[i] * (1.0/3.0))+ (k_4[i] * (1.0/6.0));
+
         }
         Array_to_State(res);
     };
@@ -192,8 +185,4 @@ public:
     };
 
 };
-
-
-
-
 #endif //ROTATETRIANGLE_RIGIDBODY_H

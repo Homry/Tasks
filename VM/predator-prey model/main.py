@@ -1,6 +1,6 @@
 import numpy
 import matplotlib.pyplot as plt
-from predator import runge_kutta_method, Bogacki_Shampine_method
+from methods import runge_kutta_method, Bogacki_Shampine_method
 
 
 def diffur1(x0, y0, a, b):

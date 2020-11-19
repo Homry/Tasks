@@ -30,7 +30,8 @@ if __name__ == '__main__':
     plt.ylabel("Количество особей")
     plt.plot(t, x, "red", label="Жертвы")
     plt.plot(t, y, "blue", label="Хищники")
-    plt.legend(bbox_to_anchor=(0.97, 0.27))
+    plt.legend(loc = 'best')
+    plt.title('Bogacki_Shampine_method')
     plt.savefig('Bogacki_Shampine_method')
     plt.show()
 
@@ -47,6 +48,7 @@ if __name__ == '__main__':
     plt.ylabel("Количество особей")
     plt.plot(t, x, "red", label="Жертвы")
     plt.plot(t, y, "blue", label="Хищники")
-    plt.legend(bbox_to_anchor=(0.97, 0.27))
+    plt.legend(loc = 'best')
+    plt.title('runge_kutta_method')
     plt.savefig('runge_kutta_method')
     plt.show()

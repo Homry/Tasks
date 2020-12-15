@@ -10,44 +10,44 @@
 [[maybe_unused]] RigidBody* body = new RigidBody();
 double DeltaTime;
 
-void drawTriangle(){
+void drawTriangle() {
 
     glBegin(GL_TRIANGLES);
-    glColor3f(0.52,0.44,1.0);// Сделали боковую сторону фиолетовой
-    glVertex3f((body->length/2), (body->width/2), 0.0);
-    glVertex3f((body->length/2), -(body->width/2), 0.0);
+    glColor3f(0.52, 0.44, 1.0);// Сделали боковую сторону фиолетовой
+    glVertex3f((body->length / 2), (body->width / 2), 0.0);
+    glVertex3f((body->length / 2), -(body->width / 2), 0.0);
     glVertex3f(0, 0, body->height);
     glEnd();
 
     glBegin(GL_TRIANGLES);
-    glColor3f(1.0,0.84,0.0);  // Сделали боковую сторону желтой
-    glVertex3f((body->length/2), -(body->width/2), 0.0);
-    glVertex3f(-(body->length/2), -(body->width/2), 0.0);
+    glColor3f(1.0, 0.84, 0.0);  // Сделали боковую сторону желтой
+    glVertex3f((body->length / 2), -(body->width / 2), 0.0);
+    glVertex3f(-(body->length / 2), -(body->width / 2), 0.0);
     glVertex3f(0, 0, body->height);
     glEnd();
 
     glBegin(GL_TRIANGLES);
-    glColor3f(0.94,0.5,0.5);// Сделали сторону  розовой
-    glVertex3f(-(body->length/2), -(body->width/2), 0.0);
-    glVertex3f(-(body->length/2), (body->width/2), 0.0);
+    glColor3f(0.94, 0.5, 0.5);// Сделали сторону  розовой
+    glVertex3f(-(body->length / 2), -(body->width / 2), 0.0);
+    glVertex3f(-(body->length / 2), (body->width / 2), 0.0);
     glVertex3f(0.0, 0.0, body->height);
     glEnd();
 
     glBegin(GL_TRIANGLES);
-    glColor3f(0.0,1.0,0.0);  // Сделали сторону  светло зеленой
-    glVertex3f((body->length/2), (body->width/2), 0.0);
-    glVertex3f(-(body->length/2), (body->width/2), 0.0);
+    glColor3f(0.0, 1.0, 0.0);  // Сделали сторону  светло зеленой
+    glVertex3f((body->length / 2), (body->width / 2), 0.0);
+    glVertex3f(-(body->length / 2), (body->width / 2), 0.0);
     glVertex3f(0.0, 0.0, body->height);
     glEnd();
 
     glBegin(GL_QUADS);// основание пирамиды
-    glColor3f(1.0,0.51,0.28); // сделали основание рыжим
-    glVertex3f((body->length/2), (body->width/2), 0.0);
-    glVertex3f((body->length/2), -(body->width/2), 0.0);
-    glVertex3f(-(body->length/2), -(body->width/2), 0.0);
-    glVertex3f(-(body->length/2), (body->width/2), 0.0);
+    glColor3f(1.0, 0.51, 0.28); // сделали основание рыжим
+    glVertex3f((body->length / 2), (body->width / 2), 0.0);
+    glVertex3f((body->length / 2), -(body->width / 2), 0.0);
+    glVertex3f(-(body->length / 2), -(body->width / 2), 0.0);
+    glVertex3f(-(body->length / 2), (body->width / 2), 0.0);
     glEnd();
-
+}
 void Idle() {
     long Time;
     static long OldTime = -1;

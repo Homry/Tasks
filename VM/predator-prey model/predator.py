@@ -18,15 +18,15 @@ def foo(eq, f, f1, a, b, c, d, h):
     k1 = h * f(eq[0], eq[1], a, b)
     q1 = h * f1(eq[0], eq[1], c, d)
 
-    k2 = h * f(eq[0] + q1/2.0, eq[1] + k1 / 2.0, a, b)
-    q2 = h * f1(eq[0] + q1/2.0, eq[1] + k1 / 2.0, c, d)
+    k2 = h * f(eq[0] + k1/2.0, eq[1] + q1 / 2.0, a, b)
+    q2 = h * f1(eq[0] + k1/2.0, eq[1] + q1 / 2.0, c, d)
 
-    k3 = h * f(eq[0] + q2 / 2.0, eq[1] + k2 / 2.0, a, b)
-    q3 = h * f1(eq[0] + q2 / 2.0, eq[1] + k2 / 2.0, c, d)
+    k3 = h * f(eq[0] + k2 / 2.0, eq[1] + q2 / 2.0, a, b)
+    q3 = h * f1(eq[0] + k2 / 2.0, eq[1] + q2 / 2.0, c, d)
 
 
-    k4 = h * f(eq[0] + q3, eq[1] + k3, a, b)
-    q4 = h * f(eq[0] + q3, eq[1] + k3, c, d)
+    k4 = h * f(eq[0] + k3, eq[1] + q3, a, b)
+    q4 = h * f(eq[0] + k3, eq[1] + q3, c, d)
 
     res = []
     res.append(eq[0] + ((k1 + 2.0*k2 + 2.0*k3 + k4)/6.0))

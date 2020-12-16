@@ -1,6 +1,6 @@
 import numpy
 import matplotlib.pyplot as plt
-from predator import runge_kutta_method, Bogacki_Shampine_method
+from predator import runge_kutta_method, Bogacki_Shampine_method, foo, boo
 import math
 
 def diffur1(x0, y0, a, b):
@@ -16,10 +16,10 @@ def default(data, alpha, delta):
 
 
 if __name__ == '__main__':
-    alpha = 1
-    beta = 1
+    alpha = 5
+    beta = 2
     gamma = 9
-    delta = 1
+    delta = 3
     statX = gamma / delta
     statY = alpha / beta
     h = 0.01
@@ -55,10 +55,28 @@ if __name__ == '__main__':
     plt.plot(t, x1, "red", label="Жертвы")
     plt.plot(t, y1, "blue", label="Хищники")
     plt.legend(loc='best')
+    plt.title('runge_kutta_method1')
+    plt.savefig('runge_kutta_method1')
+    plt.show()
+
+    t = numpy.linspace(0, 80, 800)
+    eq = [statX + 0.8, statY + 0.5]
+    x1 = []
+    y1 = []
+    for i in range(800):
+        unsv = foo(eq, diffur1, diffur2, alpha, beta, gamma, delta, h)
+        x1.append(unsv[0])
+        y1.append(unsv[1])
+        eq[0] = x1[-1]
+        eq[1] = y1[-1]
+    plt.xlabel("Время")
+    plt.ylabel("Количество особей")
+    plt.plot(t, x1, "red", label="Жертвы")
+    plt.plot(t, y1, "blue", label="Хищники")
+    plt.legend(loc='best')
     plt.title('runge_kutta_method')
     plt.savefig('runge_kutta_method')
     plt.show()
-
 
     x = []
     y = []

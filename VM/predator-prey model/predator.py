@@ -26,7 +26,7 @@ def foo(eq, f, f1, a, b, c, d, h):
 
 
     k4 = h * f(eq[0] + k3, eq[1] + q3, a, b)
-    q4 = h * f(eq[0] + k3, eq[1] + q3, c, d)
+    q4 = h * f1(eq[0] + k3, eq[1] + q3, c, d)
 
     res = []
     res.append(eq[0] + ((k1 + 2.0*k2 + 2.0*k3 + k4)/6.0))

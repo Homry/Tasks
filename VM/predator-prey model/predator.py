@@ -29,6 +29,8 @@ def Bogacki_Shampine_method(eq, f, f1, a, b, c, d, h):
 
     return res
 
+    return res
+
 
 def foo(eq, f, f1, a, b, c, d, h):
     k1 = h * f(eq[0], eq[1], a, b)

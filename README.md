@@ -29,7 +29,7 @@ cd VM/KahanSum/KahanSumPy
 python3 main.py
 ```
 
-#### Запуск юнит-тестов cpp
+#### Запуск юнит-тестов py
 ```
 cd VM/KahanSum/KahanSumPy
 python3 test.py -v

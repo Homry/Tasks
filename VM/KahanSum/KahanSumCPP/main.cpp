@@ -24,7 +24,7 @@ int main(){
         std::cout << std::fixed<<std::setprecision(20) << array[i] << std::endl;
     }*/
 
-    std::cout << std::fixed<<std::setprecision(20) << KahanSum(arr, n) << std::endl;
+    std::cout << std::fixed<<std::setprecision(20) << KleinSum(arr, n) << std::endl;
     return 0;
 }
 

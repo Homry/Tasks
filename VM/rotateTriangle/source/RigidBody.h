@@ -53,9 +53,9 @@ public:
         this->P.x = 0;
         this->P.y = 0;
         this->P.z = 0;
-        this->L.x = 150;
-        this->L.y = 100;
-        this->L.z = 50;
+        this->L.x = 15;
+        this->L.y = 10;
+        this->L.z = 5;
         this->force.x=0;
         this->force.y=0;
         this->force.z=0;

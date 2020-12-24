@@ -22,21 +22,26 @@ def Newton(left, right, a, eps):
 
 
 def Bisection(left, right, a, eps):
+    right = right-left
     if (left * left * left * left * left + left + a) * (right * right * right * right * right + right + a) > 0:
         print("Корня не существует")
         return 0
-    mid = left + (right - left) / 2.0
+
     i = 0
+    midl = -100000000000
     while (right - left > eps):
+
+        mid = left + (right - left) / 2.0
+        if midl == mid:
+            return mid
         print(i, 'iteration', mid)
         if (left * left * left * left * left + left + a) * (mid * mid * mid * mid * mid + mid + a) <= 0:
             right = mid
         else:
             left = mid
-        mid = left + (right - left) / 2.0
+        midl = mid
         i+=1
     return mid
-
 
 if __name__ == '__main__':
     print("Введите левую границу")

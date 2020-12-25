@@ -60,7 +60,6 @@ if __name__ == '__main__':
     yt = []
     tt = []
     start_time = time.time()
-    n = 1000000
     for i in range(n):
         unsv = Bogacki_Shampine_method(eq, diffur1, diffur2, alpha, beta, gamma, delta, h)
         xt.append(unsv[0])
@@ -230,7 +229,7 @@ if __name__ == '__main__':
         x2.append(A * math.cos(omega * i) + B * math.sin(omega * i))
         y2.append(A1 * math.cos(omega * i) + B1 * math.sin(omega * i))
         t2.append(i)
-        i += 0.01
+        i += 1e-8
     print(len(x2), len(t2))
     plt.xlabel("Время")
     plt.ylabel("Количество особей")
@@ -245,9 +244,11 @@ if __name__ == '__main__':
     y2int = list(numpy.interp(t, t2, y2))
     errorx = []
     errory = []
+    amplx = max(x) - max(x2int)
+    amply = max(y) - max(y2int)
     for i in range(len(x)):
-        errorx.append((x[i] - xmin - (xmax - xmin) / 2) - x2int[i])
-        errory.append((y[i] - ymin - (ymax - ymin) / 2) - y2int[i])
+        errorx.append(x[i] - amplx - x2int[i])
+        errory.append(y[i] - amply - y2int[i])
     plt.xlabel("Время")
     plt.ylabel("ошибка")
     plt.plot(t, errorx, "red", label="Жертвы")
@@ -256,15 +257,17 @@ if __name__ == '__main__':
     plt.title('ошибка1')
     plt.savefig('ошибка1')
     plt.show()
-    t = numpy.linspace(0, 100000, n)
+
 
     errorx.clear()
     errory.clear()
     x2int = list(numpy.interp(t1, t2, x2))
     y2int = list(numpy.interp(t1, t2, y2))
+    amplx = max(x1) - max(x2int)
+    amply = max(y1) - max(y2int)
     for i in range(len(x)):
-        errorx.append(x1[i] - amplx1 - x2int[i])
-        errory.append(y1[i] - amply1 - y2int[i])
+        errorx.append(x1[i] - amplx - x2int[i])
+        errory.append(y1[i] - amply - y2int[i])
     plt.xlabel("Время")
     plt.ylabel("ошибка")
     plt.plot(t1, errorx, "red", label="Жертвы")
